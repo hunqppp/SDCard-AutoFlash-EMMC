@@ -1,0 +1,14 @@
+[Unit]
+Description=Led Alive Service
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=2
+User=pi
+WorkingDirectory=/home/pi
+ExecStart=/usr/bin/sudo /usr/local/bin/alive-script.sh > /dev/null 2>&1
+
+[Install]
+WantedBy=multi-user.target
