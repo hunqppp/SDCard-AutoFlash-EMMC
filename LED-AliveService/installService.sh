@@ -2,8 +2,8 @@
 
 SERVICE_NAME="led-alive.service"
 
-/usr/bin/sudo cp alive-script.sh /usr/local/bin
-/usr/bin/sudo chmod +x /usr/local/bin/alive-script.sh
+/usr/bin/sudo cp aliveScript.sh /usr/local/bin
+/usr/bin/sudo chmod +x /usr/local/bin/aliveScript.sh
 /usr/bin/sudo cp led-alive.service /etc/systemd/system
 
 # Check the service is active or not

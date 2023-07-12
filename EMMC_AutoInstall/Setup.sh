@@ -1,8 +1,8 @@
 #!/bin/bash
 
-WORKPATH=/home/pi/emmc-auto-install
-SCRIPTRUN=emmc-install.sh
-INSTALLLOG=install-log.txt
+WORKPATH=/home/pi/EMMC_AutoInstall
+SCRIPTRUN=EMMC_Install.sh
+INSTALLLOG=installLOG.txt
 
 # Edit crontab job
 (crontab -l ; echo "@reboot /bin/bash ${WORKPATH}/$SCRIPTRUN >> ${WORKPATH}/$INSTALLLOG 2>&1") | crontab -

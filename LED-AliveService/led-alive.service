@@ -8,7 +8,7 @@ Restart=always
 RestartSec=2
 User=pi
 WorkingDirectory=/home/pi
-ExecStart=/usr/bin/sudo /usr/local/bin/alive-script.sh > /dev/null 2>&1
+ExecStart=/usr/bin/sudo /usr/local/bin/aliveScript.sh > /dev/null 2>&1
 
 [Install]
 WantedBy=multi-user.target

@@ -1,7 +1,7 @@
 #|---------------------------------------------------
 #| Usage example: 
-#|  -SD Card:  /bin/bash partition-resize.sh sdb 3
-#|  -EMMC:     /bin/bash partition-resize.sh mmcblk0 p3
+#|  -SD Card:  /bin/bash partitionResize.sh sdb 3
+#|  -EMMC:     /bin/bash partitionResize.sh mmcblk0 p3
 #|---------------------------------------------------
 
 #!/bin/bash

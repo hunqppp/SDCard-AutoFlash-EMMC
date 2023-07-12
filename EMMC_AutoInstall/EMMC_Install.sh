@@ -27,9 +27,9 @@
 #           - Create file
 #           - Installation:
 #               + crontab -e
-#               + Command: @reboot /bin/bash /home/pi/emmc-auto-install/flash-run.sh > /home/pi/emmc-auto-install/log.txt 2>&1
+#               + Command: @reboot /bin/bash /home/pi/EMMC_AutoInstall/flash-run.sh > /home/pi/EMMC_AutoInstall/log.txt 2>&1
 #           - Monitoring realtime:
-#               + tail -f install-log.txt
+#               + tail -f installLOG.txt
 #=============================================================
 
 #!/bin/bash
@@ -44,7 +44,7 @@ KPUR='\033[0;35m'
 KCYC='\033[0;36m'
 KWHI='\033[0;37m'
 
-WORKPATH=/home/pi/emmc-auto-install
+WORKPATH=/home/pi/EMMC_AutoInstall
 
 # Variables
 DISK_COUNT=
@@ -93,7 +93,7 @@ then
     then
         /usr/bin/sudo dd if=$WORKPATH/$IMG_TARGET of=/dev/$EMMC bs=4M conv=fsync status=progress
         sync
-        /usr/bin/sudo /bin/bash $WORKPATH/partition-resize.sh $EMMC p3
+        /usr/bin/sudo /bin/bash $WORKPATH/partitionResize.sh $EMMC p3
         /usr/bin/sudo poweroff
     else
         echo "$WORKPATH/$IMG_TARGET DOES NOT EXIST -> FLASH (.img) TO EMMC FAILED"
