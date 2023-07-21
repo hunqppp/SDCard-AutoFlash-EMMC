@@ -30,44 +30,36 @@
 #               + Command: @reboot /bin/bash /home/pi/EMMC_AutoInstall/flash-run.sh > /home/pi/EMMC_AutoInstall/log.txt 2>&1
 #           - Monitoring realtime:
 #               + tail -f installLOG.txt
+#           20/7/2023:
+#           - Extend user macro
 #=============================================================
 
 #!/bin/bash
 
-# Kernel colorations display
-KBLA='\033[0;30m'
-KRED='\033[0;31m'
-KGRN='\033[0;32m'
-KYEL='\033[0;33m'
-KBLU='\033[0;34m'
-KPUR='\033[0;35m'
-KCYC='\033[0;36m'
-KWHI='\033[0;37m'
+### User include
+source usrInc.sh
 
-WORKPATH=/home/pi/EMMC_AutoInstall
-
-# Variables
+### Local variables
 DISK_COUNT=
 EMMC="mmcblk0"
 FLASHER=0
-IMG_TARGET="iotdmgateway_os.img"
 
-# Get current time date
+### Get current time date
 uptime=$(date +"%Y-%m-%d %H:%M:%S")
 
-# User function
+### User function
 function uptimeFunction() {
     echo "UPTIME: ${uptime}"
 }
 
-# TODO
+### TODO
 uptimeFunction
 
-# Get the number of disks on the system
+### Get the number of disks on the system
 DISK_COUNT=$(lsblk -no TYPE | grep "disk" | wc -l)
 echo "SYSTEM DISKS: $DISK_COUNT"
 
-# Check system boot device
+### Check system boot device
 DISKS=$(lsblk -ndo NAME)
 LIST_DISKS=($DISKS)
 
@@ -88,13 +80,13 @@ fi
 
 if [[ $FLASHER == 1 ]];
 then
-    # Check is .img is exist or not
-    if [ -f "$WORKPATH/$IMG_TARGET" ];
+    ### Check is .img is exist or not
+    if [ -f "${WORKPATH}/${IMG_TARGET}" ];
     then
-        /usr/bin/sudo dd if=$WORKPATH/$IMG_TARGET of=/dev/$EMMC bs=4M conv=fsync status=progress
+        echo $USRPASS | /usr/bin/sudo -S dd if=$WORKPATH/$IMG_TARGET of=/dev/$EMMC bs=4M conv=fsync status=progress
         sync
-        /usr/bin/sudo /bin/bash $WORKPATH/partitionResize.sh $EMMC p3
-        /usr/bin/sudo poweroff
+        echo $USRPASS | /usr/bin/sudo -S $SHELL $WORKPATH/partitionResize.sh $EMMC $PARTITION_RESIZE
+        echo $USRPASS | /usr/bin/sudo -S poweroff
     else
         echo "$WORKPATH/$IMG_TARGET DOES NOT EXIST -> FLASH (.img) TO EMMC FAILED"
     fi

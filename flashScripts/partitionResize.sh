@@ -1,10 +1,12 @@
 #|---------------------------------------------------
 #| Usage example: 
-#|  -SD Card:  /bin/bash partitionResize.sh sdb 3
-#|  -EMMC:     /bin/bash partitionResize.sh mmcblk0 p3
+#|  -SD Card:  /bin/bash partitionResize.sh sdb 1
+#|  -EMMC:     /bin/bash partitionResize.sh mmcblk0 p1
 #|---------------------------------------------------
 
 #!/bin/bash
+
+source usrInc.sh
 
 DEVICE=$1
 PARTNBR=$2
@@ -28,9 +30,9 @@ newEnd=$(($(cat /sys/block/$DEVICE/size) - 8))
 
 if [ "$newEnd" -gt "$end" ]
 then
-    echo "NO NEED TO RESIZE $DEVICE$PARTNBR"
-    /usr/bin/sudo parted /dev/$DEVICE resizepart ${PARTNBR/[!0-9]} 100%
-    /usr/bin/sudo resize2fs /dev/$DEVICE$PARTNBR
+    echo "NEED TO RESIZE $DEVICE$PARTNBR"
+    echo $USRPASS | /usr/bin/sudo -S parted /dev/$DEVICE resizepart ${PARTNBR/[!0-9]} 100%
+    echo $USRPASS | /usr/bin/sudo -S resize2fs /dev/$DEVICE$PARTNBR
 else
     echo "NO NEED TO RESIZE $DEVICE$PARTNBR"
 fi
